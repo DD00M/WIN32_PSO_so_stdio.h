@@ -11,18 +11,21 @@
 #define _WIN32
 
 int main(){
-    SO_FILE *file = so_fopen("./myOut.txt", "w");
-    HANDLE h_out = GetStdHandle(STD_OUTPUT_HANDLE);
-    BOOL write = true;
-    DWORD bytesWrite;
-
-    //CHAR buffer[10 + 1];
-    printf("a intrat aici\n");
-    for (int i = 0; i < 8; i++){
-        so_fputc('c', file);
+    SO_FILE *p = so_popen("dir", "r");
+    if (p == NULL){
+        printf("p is null\n");
+        return -1;
+    }else{
+        printf("here\n");
+        char *buffer = (char *)malloc(100*sizeof(char));
+        if(buffer = NULL){
+            printf("eroare la buffer\n");
+            return -1;
+        }else{
+            printf("intrat pe else\n");
+            so_fread(buffer, 20, 1, p);
+            printf("%s\n", buffer);
+        }
     }
-    printf("shoalalal:%d\n", file->off_written);
-    int k = so_fflush(file);
-    printf("%d\n", k);
     return 0;
 }

@@ -10,14 +10,14 @@
 SO_FILE *so_fopen(const char *pathname, const char *mode)
 {
     if (strcmp(mode, "r") == 0){
-        printf("1");
+        //printf("1");
         SO_FILE *fp = (SO_FILE*)malloc(sizeof(SO_FILE));
         if (fp == NULL){
             printf("2");
             perror("bad alloc\n");
             return NULL;
         }
-        printf("3");
+        //printf("3");
         HANDLE h_in = CreateFileA(pathname, 
                                 GENERIC_READ, 
                                 FILE_SHARE_READ, 
@@ -26,7 +26,7 @@ SO_FILE *so_fopen(const char *pathname, const char *mode)
                                 FILE_ATTRIBUTE_NORMAL, 
                                 NULL
                                 );    
-        printf("4");
+        //printf("4");
         if (h_in == INVALID_HANDLE_VALUE){
             printf("5");
             perror("file could not be opened\n");
@@ -37,7 +37,7 @@ SO_FILE *so_fopen(const char *pathname, const char *mode)
         fp->cursor = 0;
         fp->firstIndex = 0;
         fp->lastIndex = 0;
-        printf("6");
+        //printf("6");
         fp->buffer = (char*)malloc(BUFSIZE*sizeof(char));
         //fp->buffer[BUFSIZE] = '\0';
         if(fp->buffer == NULL){
@@ -45,18 +45,18 @@ SO_FILE *so_fopen(const char *pathname, const char *mode)
             return NULL;
         }
         fp->mode = "r";
-        printf("7");
+        //printf("7");
     
         return fp;
     }else if(strcmp(mode, "r+") == 0){
-        printf("1");
+        //printf("1");
         SO_FILE *fp = (SO_FILE*)malloc(sizeof(SO_FILE));
         if (fp == NULL){
             printf("2");
             perror("bad alloc\n");
             return NULL;
         }
-        printf("3");
+        //printf("3");
         HANDLE h_in = CreateFileA(pathname, 
                                 GENERIC_READ | GENERIC_WRITE, 
                                 0, 
@@ -65,7 +65,7 @@ SO_FILE *so_fopen(const char *pathname, const char *mode)
                                 FILE_ATTRIBUTE_NORMAL, 
                                 NULL
                                 );    
-        printf("4");
+        //printf("4");
         if (h_in == INVALID_HANDLE_VALUE){
             printf("5");
             perror("file could not be opened\n");
@@ -75,14 +75,14 @@ SO_FILE *so_fopen(const char *pathname, const char *mode)
         fp->so_handle = h_in;
         fp->firstIndex = 0;
         fp->cursor = 0;
-        printf("6");
+        //printf("6");
         fp->buffer = (char*)malloc(BUFSIZE*sizeof(char));
         if(fp->buffer == NULL){
             perror("bad alloc buffer\n");
             return NULL;
         }
         fp->mode = "r+";
-        printf("7");
+        //printf("7");
     
         return fp;
     }else if(strcmp(mode, "w") == 0){

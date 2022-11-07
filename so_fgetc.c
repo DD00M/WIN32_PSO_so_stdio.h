@@ -7,11 +7,14 @@
 
 int so_fgetc(SO_FILE *stream)
 {
+    //printf("salut din fgetc\n");
     if (strcmp(stream->mode, "w") == 0){
         return SO_EOF;
     }
-   if (stream->firstIndex == stream->lastIndex)
+    //printf("%d %d\n", stream->firstIndex, stream->lastIndex);
+    if (stream->firstIndex == stream->lastIndex)
     {
+        //printf("fgetc\n");
         DWORD bytesRead = -1;
         int checkRead = ReadFile(stream->so_handle, 
                                 stream->buffer, 
@@ -19,6 +22,9 @@ int so_fgetc(SO_FILE *stream)
                                 &bytesRead, 
                                 NULL
                                 );
+        //printf("$$$$\n");
+        //printf("%s\n", stream->buffer);
+        //printf("%d\n", bytesRead);
         if(checkRead == 0){
             return SO_EOF;
         }
@@ -27,6 +33,7 @@ int so_fgetc(SO_FILE *stream)
         }
         stream->lastIndex = (int)bytesRead - 1;
         stream->firstIndex = 0;
+        //printf("%d %d\n", stream->firstIndex, stream->lastIndex);
         if (stream->lastIndex == -1){
             return NULL;
         }
@@ -38,6 +45,7 @@ int so_fgetc(SO_FILE *stream)
         {
             stream->off_read = bytesRead;
             stream->cursor += 1;
+            //printf("this_Char: %c", stream->buffer[0]);
             return (int)stream->buffer[0];
         }
     }
