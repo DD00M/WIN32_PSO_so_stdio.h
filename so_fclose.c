@@ -9,9 +9,21 @@
 
 int so_fclose(SO_FILE *stream)
 {
-    free(stream);
-    if (stream != NULL){
-        CloseHandle(stream->so_handle);
+    if (stream == NULL){
         return SO_EOF;
-    }else return 0;
+    }
+
+    if (stream->is_file == 0){
+        return SO_EOF;
+    }
+
+    so_fflush(stream);
+    BOOL k = CloseHandle(stream->so_handle);
+    if (!k)
+    {
+        free(stream);
+        return SO_EOF;
+    }
+    free(stream);
+    return 0;
 }

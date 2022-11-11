@@ -15,17 +15,25 @@ so_fflush.obj: so_fflush.c
     cl /c so_fflush.c
 so_fseek.obj: so_fseek.c
     cl /c so_fseek.c
+so_ftell.obj: so_ftell.c
+    cl /c so_ftell.c
 so_popen.obj: so_popen.c
     cl /c so_popen.c
 so_pclose.obj: so_pclose.c
     cl /c so_pclose.c
+so_fileno.obj: so_fileno.c
+    cl /c so_fileno.c
+so_ferror.obj: so_ferror.c
+    cl /c so_ferror.c
+so_feof.obj: so_feof.c
+    cl /c so_feof.c
 main.obj: main.c
     cl /c main.c
-so_stdio.lib: so_fopen.obj so_fgetc.obj so_fclose.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj
-    link /nologo /dll so_fopen.obj so_fclose.obj so_fgetc.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj /out:so_stdio.dll /implib:so_stdio.lib
+so_stdio.lib: so_fopen.obj so_fgetc.obj so_fclose.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj so_ftell.obj so_fileno.obj so_feof.obj so_ferror.obj
+    link /nologo /dll so_fopen.obj so_fclose.obj so_fgetc.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj so_ftell.obj so_fileno.obj so_feof.obj so_ferror.obj /out:so_stdio.dll /implib:so_stdio.lib
 main.exe: main.obj so_stdio.lib
     link /out:main.exe main.obj so_stdio.lib
-build: so_fopen.obj so_fgetc.obj so_fclose.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj
-    link /nologo /dll so_fopen.obj so_fclose.obj so_fgetc.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj /out:so_stdio.dll /implib:so_stdio.lib
+build: so_fopen.obj so_fgetc.obj so_fclose.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj so_ftell.obj so_fileno.obj so_feof.obj so_ferror.obj
+    link /nologo /dll so_fopen.obj so_fclose.obj so_fgetc.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj so_ftell.obj so_fileno.obj so_feof.obj so_ferror.obj/out:so_stdio.dll /implib:so_stdio.lib
 clean: 
-    del so_fopen.obj so_fclose.obj so_fgetc.obj so_stdio.dll so_stdio.exp so_stdio.lib main.exe main.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj
+    del so_fopen.obj so_fclose.obj so_fgetc.obj so_stdio.dll so_stdio.exp so_stdio.lib main.exe main.obj so_fputc.obj so_fread.obj so_fwrite.obj so_fflush.obj so_fseek.obj so_popen.obj so_pclose.obj so_ftell.obj so_fileno.obj so_feof.obj so_ferror.obj

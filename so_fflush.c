@@ -10,16 +10,39 @@
 
 int so_fflush(SO_FILE *stream)
 {
-    if (stream->off_written != 0)
+    if (stream->prev == WRITEprev)
     {
-        DWORD bytesWrite;
-        int check = WriteFile(stream->so_handle, stream->buffer, BUFSIZE, &bytesWrite, NULL);
-        if(check <= 0){
-            return SO_EOF;
-        }
+        if (stream->off_written != 0)
+        {
+            DWORD bytesWrite;
+            int d = WriteFile(stream->so_handle, stream->buffer, stream->off_written, &bytesWrite, NULL);
+            if (d < 0)
+            {
+                stream->isERR = 555;
+                return SO_EOF;
+            }
+            stream->buffer_index = 0;
+            stream->off_written = 0;
+            // memset(stream->buffer, 0, BUFSIZE);
+            for (int i = 0; i < BUFSIZE; i++)
+            {
+                stream->buffer[i] = '\0';
+            }
+            stream->isERR = 999;
+            return 0;
+        }return SO_EOF;
+    }
+    else
+    {
+        stream->buffer_index = 0;
         stream->off_written = 0;
-        return 0;
-    }else{
+            // memset(stream->buffer, 0, BUFSIZE);
+        for (int i = 0; i < BUFSIZE; i++)
+        {
+            stream->buffer[i] = '\0';
+        }
+
+        stream->isERR = 555;
         return SO_EOF;
     }
 }

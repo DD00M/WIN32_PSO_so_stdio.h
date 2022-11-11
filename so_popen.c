@@ -16,13 +16,11 @@ SO_FILE *so_popen(const char *command, const char *type)
     DWORD dwRes;
     bool bRes;
     SO_FILE *file = (SO_FILE *)malloc(sizeof(SO_FILE));
-    file->buffer = (char *)malloc(BUFSIZE * sizeof(char));
     file->buffer_index = 0;
     file->off_written = 0;
     file->cursor = 0;
     file->firstIndex = 0;
     file->lastIndex = 0;
-    file->mode = (char*)malloc(2*sizeof(char));
     strcpy(file->mode, type);
     file->is_p = 1;
 

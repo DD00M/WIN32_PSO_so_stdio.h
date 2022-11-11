@@ -38,28 +38,37 @@ struct _so_file;
 #define BUFSIZE 4096
 
 typedef struct _so_file{
-    int so_start_offset;
     HANDLE so_handle;
+    int so_start_offset;
     int so_sizeFile;
-    char *mode;
-    char *buffer;
+    char mode[2];
+    char buffer[BUFSIZE];
     char currentBufSize;
     int buffer_index;
     int off_read;
     int off_written;
     int isERR;
-    
+
     int firstIndex;
     int lastIndex;
+    int bufsizeIndex;
 
     int read_flag;
 
-    long cursor;
+    unsigned int cursor;
 
     int prev;
 
     int pid;
+    int ppid;
+
     int is_p;
+    int childFlag;
+
+    int is_file;
+    int flagERR;
+
+    int eof;
 
     PROCESS_INFORMATION p_pi;
 } SO_FILE;
